@@ -4,11 +4,15 @@ kotlin = "2.2.20"
 android-minSdk = "24"
 android-compileSdk = "36"
 vanniktechMavenPublish = "0.34.0"
+mixpanelAndroid = "8.2.4"
+spmForKmp = "1.4.4"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+mixpanel-android = { module = "com.mixpanel.android:mixpanel-android", version.ref = "mixpanelAndroid" }
 
 [plugins]
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublish" }
+spmForKmp = { id = "io.github.frankois944.spmForKmp", version.ref = "spmForKmp" }
