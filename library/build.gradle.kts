@@ -19,7 +19,7 @@ version = "1.0.0"
 kotlin {
 //    jvm()
     androidLibrary {
-        namespace = "org.jetbrains.kotlinx.multiplatform.library.template"
+        namespace = "io.github.itsivag.mixpanel-kmp"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -75,28 +75,28 @@ mavenPublishing {
     coordinates(group.toString(), "library", version.toString())
 
     pom {
-        name = "My library"
-        description = "A library."
-        inceptionYear = "2024"
-        url = "https://github.com/kotlin/multiplatform-library-template/"
+        name = "Mixpanel-KMP"
+        description = "An unofficial Mixpanel client SDK for Kotlin Multiplatform that enables shared analytics across Android and iOS."
+        inceptionYear = "2026"
+        url = "https://github.com/itsivag/mixpanel-kmp"
         licenses {
             license {
-                name = "XXX"
-                url = "YYY"
-                distribution = "ZZZ"
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
             }
         }
         developers {
             developer {
-                id = "XXX"
-                name = "YYY"
-                url = "ZZZ"
+                id = "itsivag"
+                name = "Siva G"
+                url = "https://github.com/itsivag"
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url = "https://github.com/itsivag/mixpanel-kmp"
+            connection = "scm:git:git://github.com/itsivag/mixpanel-kmp"
+            developerConnection = "scm:git:ssh://git@github.com/itsivag/mixpanel-kmp"
         }
     }
 }
