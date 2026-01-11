@@ -5,11 +5,10 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI
 import org.json.JSONObject
 
 actual class MixPanelAnalyticsTracker : AnalyticsTracker {
-    private val mixpanel =
-        MixpanelAPI.getInstance(context, "c3d382f1b21e986d8ae06bc1cd965013", true)
+    private lateinit var mixpanel: MixpanelAPI
 
     actual override suspend fun init(token: String) {
-
+        MixpanelAPI.getInstance(MixPanelAndroidContext.get(), "c3d382f1b21e986d8ae06bc1cd965013", true)
     }
 
     actual override fun trackEvent(event: String, properties: Map<String, Any>?) {
