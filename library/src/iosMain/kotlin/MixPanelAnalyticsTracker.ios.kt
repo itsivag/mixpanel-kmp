@@ -13,13 +13,13 @@ actual class MixPanelAnalyticsTracker : AnalyticsTracker {
         swiftMixPanel.initMixPanelWithToken(token)
     }
 
+    @Suppress("UNCHECKED_CAST")
     actual override fun trackEvent(
         event: String, properties: Map<String, Any>?
     ) {
-        //TODO: send properties
         swiftMixPanel.trackEventWithEvent(
             event = event,
-            properties = null
+            properties = properties as Map<Any?, *>?
         )
     }
 }
