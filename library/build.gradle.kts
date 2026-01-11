@@ -13,7 +13,7 @@ plugins {
     alias(libs.plugins.spmForKmp)
 }
 
-group = "io.github.kotlin"
+group = "io.github.itsivag"
 version = "1.0.0"
 
 kotlin {
@@ -72,7 +72,7 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates(group.toString(), "library", version.toString())
+    coordinates(group.toString(), "mixpanel-kmp", version.toString())
 
     pom {
         name = "Mixpanel-KMP"
