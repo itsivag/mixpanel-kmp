@@ -14,12 +14,11 @@ plugins {
 }
 
 group = "io.github.itsivag"
-version = "1.0.1"
+version = "1.0.2"
 
 kotlin {
-//    jvm()
     androidLibrary {
-        namespace = "io.github.itsivag.mixpanel-kmp"
+        namespace = "io.github.itsivag.mixpanel_kmp"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -53,11 +52,9 @@ kotlin {
             }
         }
     }
-//    linuxX64()
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
             implementation(libs.mixpanel.android)
         }
 
@@ -76,7 +73,8 @@ mavenPublishing {
 
     pom {
         name = "Mixpanel-KMP"
-        description = "An unofficial Mixpanel client SDK for Kotlin Multiplatform that enables shared analytics across Android and iOS."
+        description =
+            "An unofficial Mixpanel client SDK for Kotlin Multiplatform that enables shared analytics across Android and iOS."
         inceptionYear = "2026"
         url = "https://github.com/itsivag/mixpanel-kmp"
         licenses {
