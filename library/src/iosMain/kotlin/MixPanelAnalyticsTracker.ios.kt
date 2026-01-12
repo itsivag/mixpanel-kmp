@@ -14,7 +14,7 @@ actual class MixPanelAnalyticsTracker : AnalyticsTracker {
     }
 
     @Suppress("UNCHECKED_CAST")
-    actual override fun trackEvent(
+    actual override suspend fun trackEvent(
         event: String, properties: Map<String, Any>?
     ) {
         swiftMixPanel.trackEventWithEvent(

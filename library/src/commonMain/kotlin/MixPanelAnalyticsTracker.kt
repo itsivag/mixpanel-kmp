@@ -59,7 +59,7 @@ expect class MixPanelAnalyticsTracker() : AnalyticsTracker {
      *                   Mixpanel supports (String, Number, Boolean, etc.). Pass `null` if
      *                   no additional properties are needed.
      */
-    override fun trackEvent(
+    override suspend fun trackEvent(
         event: String,
         properties: Map<String, Any>?
     )

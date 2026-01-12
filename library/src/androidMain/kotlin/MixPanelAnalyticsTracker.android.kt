@@ -8,10 +8,10 @@ actual class MixPanelAnalyticsTracker : AnalyticsTracker {
     private lateinit var mixpanel: MixpanelAPI
 
     actual override suspend fun init(token: String) {
-        MixpanelAPI.getInstance(MixPanelAndroidContext.get(), token, true)
+        mixpanel = MixpanelAPI.getInstance(MixPanelAndroidContext.get(), token, true)
     }
 
-    actual override fun trackEvent(event: String, properties: Map<String, Any>?) {
+    actual override suspend fun trackEvent(event: String, properties: Map<String, Any>?) {
         if (BuildConfig.DEBUG.not()) {
             val json = JSONObject()
             properties?.forEach { (key, value) ->
