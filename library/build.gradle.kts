@@ -46,7 +46,7 @@ kotlin {
                     products = {
                         add("Mixpanel")
                     },
-                    version = "5.1.3",
+                    version = "6.1.0",
                 )
             }
         }

@@ -1,20 +1,58 @@
 name: Publish
+
 on:
-  release:
-    types: [released, prereleased]
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-maven-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   publish:
-    name: Release build and publish
+    name: Build and publish
     runs-on: macOS-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: 21
-      - name: Publish to MavenCentral
+
+      - name: Check if version already exists on Maven Central
+        id: version_check
+        shell: bash
+        run: |
+          VERSION="$(sed -nE 's/^version = "(.*)"/\1/p' library/build.gradle.kts | head -n1)"
+          if [[ -z "${VERSION}" ]]; then
+            echo "Could not determine library version from library/build.gradle.kts"
+            exit 1
+          fi
+
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          QUERY_URL="https://search.maven.org/solrsearch/select?q=g:%22io.github.itsivag%22+AND+a:%22mixpanel-kmp%22+AND+v:%22${VERSION}%22&rows=1&wt=json"
+
+          if curl -fsSL "${QUERY_URL}" | tr -d '\n' | grep -q '"numFound":[1-9]'; then
+            echo "publish=false" >> "${GITHUB_OUTPUT}"
+            echo "Version ${VERSION} is already available on Maven Central. Skipping publish."
+          else
+            echo "publish=true" >> "${GITHUB_OUTPUT}"
+            echo "Version ${VERSION} not found on Maven Central. Publishing will run."
+          fi
+
+      - name: Build and run tests
+        if: steps.version_check.outputs.publish == 'true'
+        run: ./gradlew clean build :library:testAndroidHostTest --no-configuration-cache
+
+      - name: Publish to Maven Central
+        if: steps.version_check.outputs.publish == 'true'
         run: ./gradlew publishToMavenCentral --no-configuration-cache
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
@@ -23,3 +61,6 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
 
+      - name: Skip publish (version already released)
+        if: steps.version_check.outputs.publish != 'true'
+        run: echo "No publish required for version ${{ steps.version_check.outputs.version }}."
