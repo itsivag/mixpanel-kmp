@@ -30,7 +30,6 @@ import Mixpanel
     public func identifyDistinctId(_ distinctId: String) {
         let mixpanel = Mixpanel.mainInstance()
         mixpanel.identify(distinctId: distinctId)
-        mixpanel.people.identify(distinctId: distinctId)
     }
 
     public func setProfileProperties(_ properties: [AnyHashable: Any]) {
