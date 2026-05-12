@@ -8,4 +8,6 @@ import kotlin.native.ObjCName
 interface AnalyticsTracker {
     suspend fun init(token : String)
     suspend fun trackEvent(event: String, properties: Map<String, Any>? = emptyMap())
+    suspend fun identify(distinctId: String)
+    suspend fun setProfile(properties: Map<String, Any>)
 }

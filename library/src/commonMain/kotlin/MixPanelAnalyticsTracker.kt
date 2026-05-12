@@ -11,6 +11,8 @@ package com.suprbeta.kuri.analytics
  * ```kotlin
  * val tracker = MixPanelAnalyticsTracker()
  * tracker.init("your-mixpanel-token")
+ * tracker.identify("user-123")
+ * tracker.setProfile(mapOf("plan" to "pro", "email" to "user@example.com"))
  * tracker.trackEvent("button_clicked", mapOf("button_name" to "submit"))
  * ```
  *
@@ -63,4 +65,25 @@ expect class MixPanelAnalyticsTracker() : AnalyticsTracker {
         event: String,
         properties: Map<String, Any>?
     )
+
+    /**
+     * Identifies the current user with a unique distinct ID.
+     *
+     * This must be called before [setProfile] to associate user profile properties
+     * with the correct user. Events tracked after this call will be attributed to
+     * the identified user.
+     *
+     * @param distinctId The unique identifier for the user (e.g., Firebase UID).
+     */
+    override suspend fun identify(distinctId: String)
+
+    /**
+     * Sets user profile properties on the identified user's Mixpanel People profile.
+     *
+     * Properties set via this method appear in the Mixpanel Users section. Common
+     * properties include `$name`, `$email`, `plan`, etc.
+     *
+     * @param properties Map of profile property names to values.
+     */
+    override suspend fun setProfile(properties: Map<String, Any>)
 }

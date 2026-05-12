@@ -26,4 +26,22 @@ import Mixpanel
 
         mixpanel.track(event: event, properties: mpProperties)
     }
+
+    public func identifyDistinctId(_ distinctId: String) {
+        let mixpanel = Mixpanel.mainInstance()
+        mixpanel.identify(distinctId: distinctId)
+        mixpanel.people.identify(distinctId: distinctId)
+    }
+
+    public func setProfileProperties(_ properties: [AnyHashable: Any]) {
+        let mixpanel = Mixpanel.mainInstance()
+        let mpProperties: [String: MixpanelType] =
+            properties.compactMap { (key, value) -> (String, MixpanelType)? in
+                guard let stringKey = key as? String else { return nil }
+                guard let mpValue = value as? MixpanelType else { return nil }
+                return (stringKey, mpValue)
+            }
+            .reduce(into: [String: MixpanelType]()) { $0[$1.0] = $1.1 }
+        mixpanel.people.set(properties: mpProperties)
+    }
 }

@@ -20,4 +20,17 @@ actual class MixPanelAnalyticsTracker : AnalyticsTracker {
             mixpanel.track(event, json)
         }
     }
+
+    actual override suspend fun identify(distinctId: String) {
+        mixpanel.identify(distinctId)
+        mixpanel.people.identify(distinctId)
+    }
+
+    actual override suspend fun setProfile(properties: Map<String, Any>) {
+        val json = JSONObject()
+        properties.forEach { (key, value) ->
+            json.put(key, value)
+        }
+        mixpanel.people.set(json)
+    }
 }

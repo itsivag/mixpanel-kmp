@@ -22,4 +22,13 @@ actual class MixPanelAnalyticsTracker : AnalyticsTracker {
             properties = properties as Map<Any?, *>?
         )
     }
+
+    actual override suspend fun identify(distinctId: String) {
+        swiftMixPanel.identifyDistinctId(distinctId)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    actual override suspend fun setProfile(properties: Map<String, Any>) {
+        swiftMixPanel.setProfileProperties(properties as Map<AnyHashable, Any>)
+    }
 }
