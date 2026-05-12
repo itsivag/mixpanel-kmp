@@ -29,6 +29,6 @@ actual class MixPanelAnalyticsTracker : AnalyticsTracker {
 
     @Suppress("UNCHECKED_CAST")
     actual override suspend fun setProfile(properties: Map<String, Any>) {
-        swiftMixPanel.setProfileProperties(properties as Map<AnyHashable, Any>)
+        swiftMixPanel.setProfileProperties(properties as Map<Any?, *>)
     }
 }
